@@ -1,0 +1,19 @@
+server:
+  port: 8282
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          myoauth2:
+            provider: spring
+            client-id: client
+            client-secret: secret
+            scope: openid
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8282/login/oauth2/code/myoauth2
+        provider:
+          spring:
+            issuer-uri: http://localhost:8989
+
