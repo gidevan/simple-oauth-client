@@ -18,7 +18,7 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 public class WebClientConfig {
 
     @Bean
-    public ResourceServiceClient welcomeClient(OAuth2AuthorizedClientManager authorizedClientManager) throws Exception {
+    public ResourceServiceClient resourceServiceClient(OAuth2AuthorizedClientManager authorizedClientManager) {
         return httpServiceProxyFactory(authorizedClientManager).createClient(ResourceServiceClient.class);
     }
 
@@ -34,7 +34,6 @@ public class WebClientConfig {
         WebClientAdapter client = WebClientAdapter.forClient(webClient);
         return HttpServiceProxyFactory.builder(client).build();
     }
-
 
     @Bean
     public OAuth2AuthorizedClientManager authorizedClientManager(

@@ -1,6 +1,11 @@
 server:
   port: 8282
 
+logging:
+  level:
+    org:
+      springframework: DEBUG
+
 spring:
   security:
     oauth2:
@@ -12,7 +17,7 @@ spring:
             client-secret: secret
             scope: openid
             authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8282/login/oauth2/code/myoauth2
+            redirect-uri: http://127.0.0.1:8282/login/oauth2/code/myoauth2
         provider:
           spring:
             issuer-uri: http://localhost:8989

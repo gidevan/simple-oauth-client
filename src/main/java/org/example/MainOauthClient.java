@@ -7,6 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MainOauthClient {
     public static void main(String[] args) {
 
-        SpringApplication.run(MainOauthClient.class);
+        SpringApplication.run(MainOauthClient.class, args);
     }
 }

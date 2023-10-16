@@ -14,7 +14,7 @@ public class SimpleController {
         this.resourceServiceClient = resourceServiceClient;
     }
 
-    @GetMapping("/simple-response")
+    @GetMapping("/")
     public String simpleResourceServerResponse() {
         return "<h1>" + resourceServiceClient.getSimpleResponse() + "</h1>";
     }
