@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  auth-server:
+    image: vsanyc/auth-server-0.1:latest
+    ports:
+      - 8989:8989
+    environment:
+      - REGISTERED_CLIENT_MYOAUTH2_REDIRECT_URI=http://oauth-client:8282/login/oauth2/code/myoauth2
+    networks:
+      - sandbox-network
+
+  resource-server:
+    image: vsanyc/simple-resource-server-0.1:latest
+    ports:
+      - 8484:8484
+    environment:
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI=http://auth-server:8989
+    networks:
+      - sandbox-network
+    depends_on:
+      - auth-server
+
+  oauth-client:
+    image: vsanyc/simple-oauth-client:0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8282:8282
+    environment:
+      - RESOURCE_URL=http://resource-server:8484
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_MYOAUTH2_REDIRECT_URI=http://oauth-client:8282/login/oauth2/code/myoauth2
+      - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_SPRING_ISSUER_URI=http://auth-server:8989
+    depends_on:
+      - auth-server
+      - resource-server
+    networks:
+      - sandbox-network
+
+networks:
+  sandbox-network:
+    driver: bridge
