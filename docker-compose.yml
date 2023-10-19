@@ -5,7 +5,7 @@ services:
     ports:
       - 8989:8989
     environment:
-      - REGISTERED_CLIENT_MYOAUTH2_REDIRECT_URI=http://oauth-client:8282/login/oauth2/code/myoauth2
+      - REGISTERED_CLIENT_MYOAUTH2_REDIRECT_URI=http://192.168.100.23:8282/login/oauth2/code/myoauth2
     networks:
       - sandbox-network
 
@@ -29,7 +29,7 @@ services:
       - 8282:8282
     environment:
       - RESOURCE_URL=http://resource-server:8484
-      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_MYOAUTH2_REDIRECT_URI=http://oauth-client:8282/login/oauth2/code/myoauth2
+      - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_MYOAUTH2_REDIRECT_URI=http://192.168.100.23:8282/login/oauth2/code/myoauth2
       - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_SPRING_ISSUER_URI=http://auth-server:8989
     depends_on:
       - auth-server
