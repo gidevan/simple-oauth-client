@@ -6,6 +6,11 @@ services:
       - 8989:8989
     environment:
       - REGISTERED_CLIENT_MYOAUTH2_REDIRECT_URI=http://192.168.100.23:8282/login/oauth2/code/myoauth2
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8989/actuator/health" ]
+      interval: 5s
+      timeout: 3s
+      retries: 3
     networks:
       - sandbox-network
 
@@ -18,7 +23,9 @@ services:
     networks:
       - sandbox-network
     depends_on:
-      - auth-server
+      auth-server:
+        condition: service_healthy
+        restart: true
 
   oauth-client:
     image: vsanyc/simple-oauth-client:0.1
@@ -32,8 +39,11 @@ services:
       - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_MYOAUTH2_REDIRECT_URI=http://192.168.100.23:8282/login/oauth2/code/myoauth2
       - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_SPRING_ISSUER_URI=http://auth-server:8989
     depends_on:
-      - auth-server
-      - resource-server
+      auth-server:
+        condition: service_healthy
+        restart: true
+      resource-server:
+        condition: service_started
     networks:
       - sandbox-network
 
